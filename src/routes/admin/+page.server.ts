@@ -19,6 +19,7 @@ export const actions = {
     createPost: async ({ locals, request }) => {
         const formData = await request.formData();
         const title = formData.get('title');
+        const desc = formData.get('desc');
         const cover = formData.get('cover') as File;
         const content = formData.get('content');
         const isPublic = formData.get('public') === 'on';
@@ -27,16 +28,14 @@ export const actions = {
             throw new Error('content are required');
         }
 
-        const post = await locals.pb.collection('it23').create({
+        await locals.pb.collection('it23').create({
             user: locals.user?.id,
             title: title || '',
-            content,
+            desc: desc || '',
+            content: content,
+            cover: (cover.size ? cover : null),
             public: isPublic,
         });
-
-        const imageFormData = new FormData();
-        imageFormData.append('cover', cover);
-        await locals.pb.collection('it23').update(post.id, imageFormData);
 
         return {};
     },

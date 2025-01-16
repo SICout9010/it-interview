@@ -46,7 +46,7 @@
                     <Card.Title class="">{blog.title}</Card.Title>
                     <Card.Description>
                         <div class="flex items-center gap-2 mt-2">
-                            <span>{blog.expand?.user.email}</span>
+                            <span>{blog.expand?.user.name || 'ไม่ระบุชื่อ'}</span>
                         </div>
                     </Card.Description>
                 </Card.Header>

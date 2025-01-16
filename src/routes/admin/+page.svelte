@@ -11,7 +11,6 @@
     import { onMount } from 'svelte';
     import { PUBLIC_POCKETBASE_URL } from '$env/static/public';
 	import Label from '$lib/components/ui/label/label.svelte';
-	import { enhance } from '$app/forms';
 
     const pb = new PocketBase(PUBLIC_POCKETBASE_URL);
     const { data } = $props();
@@ -49,9 +48,10 @@
                         </Button>
                     </Dialog.Trigger>
                     <Dialog.Content class="min-w-[90vw] min-h-[70vh]">
-                        <form action="?/createPost" method="POST">
+                        <form action="?/createPost" method="POST" enctype="multipart/form-data">
                             <div class="text-sm text-gray-600 space-y-4">
                                 <Input type="text" name="title" class="w-full" placeholder="Title" />
+                                <Input type="text" name="desc" class="w-full mt-2" placeholder="Description" />
                                 <Input type="file" name="cover" class="w-full mt-2" placeholder="Cover URL" accept="image/*" />
                                 <Label for="public">Public</Label>
                                 <Switch id="public" name="public" class="mr-2" />
@@ -88,7 +88,7 @@
                                         class="h-10 w-10 object-cover rounded"
                                     />
                                 </Table.Cell>
-                                <Table.Cell>{post.expand?.user?.email || 'Unknown'}</Table.Cell>
+                                <Table.Cell>{post.expand?.user?.name || 'ไม่ระบุชื่อ'}</Table.Cell>
                                 <Table.Cell>
                                     <span class={post.public ? 'text-green-600' : 'text-yellow-600'}>
                                         {post.public ? 'Public' : 'Draft'}
@@ -103,10 +103,12 @@
                                             </Button>
                                         </Dialog.Trigger>
                                         <Dialog.Content class="min-w-[90vw] min-h-[70vh]">
-                                            <form action="?/updatePost" method="POST">
+                                            <form action="?/updatePost" method="POST" enctype="multipart/form-data">
                                                 <div class="text-sm text-gray-600">
                                                     <Input type="hidden" name="id" value={post.id} />
-                                                    <Textarea name="content" class="w-full min-h-96" value={post.content} />
+                                                    <Input type="text" name="title" class="w-full" placeholder="Title" value={post.title} />
+                                                    <Input type="text" name="desc" class="w-full mt-2" placeholder="Description" value={post.desc} />
+                                                    <Textarea name="content" class="w-full min-h-96 mt-2" value={post.content} />
                                                     <Button type="submit" class="mt-4">Update</Button>
                                                 </div>
                                             </form>
