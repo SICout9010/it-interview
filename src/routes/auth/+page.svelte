@@ -68,11 +68,5 @@
                 </Button>
             </form>
         </Card.Content>
-        <Card.Footer class="flex justify-center">
-            <p class="text-sm text-muted-foreground">
-                Don't have an account? 
-                <a href="/auth/register" class="text-primary hover:underline">Register</a>
-            </p>
-        </Card.Footer>
     </Card.Root>
 </div>

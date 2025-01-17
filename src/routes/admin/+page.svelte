@@ -106,6 +106,7 @@
                                             <form action="?/updatePost" method="POST" enctype="multipart/form-data">
                                                 <div class="text-sm text-gray-600">
                                                     <Input type="hidden" name="id" value={post.id} />
+                                                    <Input type="file" name="cover" />
                                                     <Input type="text" name="title" class="w-full" placeholder="Title" value={post.title} />
                                                     <Input type="text" name="desc" class="w-full mt-2" placeholder="Description" value={post.desc} />
                                                     <Textarea name="content" class="w-full min-h-96 mt-2" value={post.content} />

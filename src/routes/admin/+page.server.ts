@@ -42,13 +42,24 @@ export const actions = {
     updatePost: async ({ locals, request }) => {
         const formData = await request.formData();
         const id = formData.get('id');
+        const cover = formData.get('cover') as File;
+        const title = formData.get('title');
+        const desc = formData.get('desc');
         const content = formData.get('content');
 
-        if (!id || !content || typeof content !== 'string' || typeof id !== 'string') {
-            throw new Error('content are required');
+        if (!id || !content || !title || !desc || !cover || 
+            typeof content !== 'string' || 
+            typeof id !== 'string' ||
+            typeof title !== 'string' ||
+            typeof desc !== 'string' ||
+            !(cover instanceof File)) {
+            throw new Error('id, content, title, desc and cover are required');
         }
 
         await locals.pb.collection('it23').update(id, {
+            cover,
+            title,
+            desc,
             content,
         });
 
